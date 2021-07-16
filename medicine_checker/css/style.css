@@ -57,14 +57,13 @@ input[type="checkbox"].chkbox:checked + .chk_label{
     position:absolute;
 
     top:-0.25rem;
-    left:0%;
+    left:0.5rem;
     transform:translateY(-100%);
 
     font-size:0.85rem;
     color:white;
     background:rgba(0,0,0,0.8);
     padding:0.5rem;
-    margin-left:0.5rem;
     border-radius:0.25rem;
 }
 .control_button:hover + .control_tool_tip_topright {

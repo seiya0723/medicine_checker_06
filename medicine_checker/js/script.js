@@ -18,6 +18,7 @@ window.addEventListener("load" , function (){
 
 
     $("#csv_download").on("click",function(){ create_csv(); });
+    $("#all_remove").on("click",function(){ all_remove(); });
 
 });
 //検索の処理
@@ -140,20 +141,21 @@ function create_csv(){
     let table_side_effects = $("#table_side_effect > td ");
 
     let length  = table_names.length;
-
-    let row     = [];
     let data    = [];
 
-    for (let i=0;i<length;i++){
-        row.push(table_names.eq(i).text().replace("remove",""));
-        row.push(table_effects.eq(i).text().replace("remove",""));
-        row.push(table_cautions.eq(i).text().replace("remove",""));
-        row.push(table_dosages.eq(i).text().replace("remove",""));
-        row.push(table_side_effects.eq(i).text().replace("remove",""));
-
-        data.push(row);
-        row = []
+    function data_push(obj,length){
+        let row     = [];
+        for (let i=0;i<length;i++){
+            row.push(obj.eq(i).text().replace("remove",""));
+        }
+        return row;
     }
+
+    data.push(data_push(table_names       ,length));
+    data.push(data_push(table_effects     ,length));
+    data.push(data_push(table_cautions    ,length));
+    data.push(data_push(table_dosages     ,length));
+    data.push(data_push(table_side_effects,length));
 
     console.log(data);
 
@@ -183,5 +185,33 @@ function create_csv(){
     document.body.removeChild(link);
     delete link;
 
+}
+
+
+//スタックされているデータを全てリムーブする。
+function all_remove(){
+
+    let table_names        = $("#table_name        > th ");
+    let table_effects      = $("#table_effect      > td ");
+    let table_cautions     = $("#table_caution     > td ");
+    let table_dosages      = $("#table_dosage      > td ");
+    let table_side_effects = $("#table_side_effect > td ");
+
+
+    function row_all_remove(objects){
+        let counter = 0;
+        for (let object of objects){
+            if ( counter !== 0 ){
+                object.remove();
+            }
+            counter++;
+        }
+    }
+
+    row_all_remove(table_names       );
+    row_all_remove(table_effects     );
+    row_all_remove(table_cautions    );
+    row_all_remove(table_dosages     );
+    row_all_remove(table_side_effects);
 }
 
